@@ -74,15 +74,6 @@ const Footer: React.FC = () => {
             <h3 className="font-medium text-off-white mb-4">Contact</h3>
             <div className="space-y-3">
               <a 
-                href="mailto:contact@bluemountain.work"
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center space-x-2 text-off-white/60 hover:text-luxury-gold transition-colors"
-              >
-                <MapPin className="w-4 h-4" />
-                <span className="text-sm">Northeast India</span>
-              </a>
-              <a 
                 href="https://maps.google.com/?q=Northeast+India" 
                 target="_blank" 
                 rel="noopener noreferrer"
@@ -110,6 +101,16 @@ const Footer: React.FC = () => {
               <div className="pt-4">
                 <span className="text-off-white/60 text-sm block mb-3">Follow us:</span>
                 <div className="flex items-center space-x-4">
+                <motion.a 
+                  href="https://wa.me/917085485883" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  aria-label="Chat with us on WhatsApp"
+                  whileHover={{ scale: 1.2, rotate: 5 }}
+                  className="w-10 h-10 bg-luxury-gold/20 rounded-full flex items-center justify-center hover:bg-luxury-gold/30 transition-colors"
+                >
+                  <Phone className="w-5 h-5 text-luxury-gold" />
+                </motion.a>
                 <motion.a 
                   href="https://instagram.com/blue.mountain.official" 
                   target="_blank" 
