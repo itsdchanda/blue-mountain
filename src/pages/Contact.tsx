@@ -270,13 +270,13 @@ ${formData.message}
 
                 <ScrollReveal delay={0.5}>
                   <a 
-                    href="mailto:the.bluemountainofficial@gmail.com"
+                    href="mailto:contact@bluemountain.work"
                     className="flex items-start space-x-4 p-4 glass-card bg-coffee-brown/20 rounded-lg backdrop-blur-sm border border-luxury-gold/10 hover:border-luxury-gold/40 transition-all duration-300 group"
                   >
                     <Mail className="w-6 h-6 text-luxury-gold mt-1 flex-shrink-0 group-hover:scale-110 transition-transform" />
                     <div>
                       <h3 className="font-medium text-off-white mb-1 group-hover:text-luxury-gold transition-colors">Email</h3>
-                      <p className="text-off-white/70 group-hover:text-off-white transition-colors">the.bluemountainofficial@gmail.com</p>
+                      <p className="text-off-white/70 group-hover:text-off-white transition-colors">contact@bluemountain.work</p>
                     </div>
                   </a>
                 </ScrollReveal>

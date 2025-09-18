@@ -15,7 +15,7 @@ const createTransporter = () => {
   return nodemailer.createTransporter({
     service: 'gmail',
     auth: {
-      user: process.env.EMAIL_USER || 'the.bluemountainofficial@gmail.com',
+      user: process.env.EMAIL_USER || 'contact@bluemountain.work',
       pass: process.env.EMAIL_PASS || 'your-app-password' // Use app password for Gmail
     }
   });
@@ -86,8 +86,8 @@ app.post('/api/contact', async (req, res) => {
     `;
 
     const mailOptions = {
-      from: process.env.EMAIL_USER || 'the.bluemountainofficial@gmail.com',
-      to: 'the.bluemountainofficial@gmail.com',
+      from: process.env.EMAIL_USER || 'contact@bluemountain.work',
+      to: 'contact@bluemountain.work',
       subject: `☕ Coffee Enquiry from ${businessName}`,
       html: emailContent,
       replyTo: email

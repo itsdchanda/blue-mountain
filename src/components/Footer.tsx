@@ -74,6 +74,15 @@ const Footer: React.FC = () => {
             <h3 className="font-medium text-off-white mb-4">Contact</h3>
             <div className="space-y-3">
               <a 
+                href="mailto:contact@bluemountain.work"
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 text-off-white/60 hover:text-luxury-gold transition-colors"
+              >
+                <MapPin className="w-4 h-4" />
+                <span className="text-sm">Northeast India</span>
+              </a>
+              <a 
                 href="https://maps.google.com/?q=Northeast+India" 
                 target="_blank" 
                 rel="noopener noreferrer"
@@ -83,11 +92,11 @@ const Footer: React.FC = () => {
                 <span className="text-sm">Northeast India</span>
               </a>
               <a 
-                href="mailto:the.bluemountainofficial@gmail.com"
+                href="mailto:contact@bluemountain.work"
                 className="flex items-center space-x-2 text-off-white/60 hover:text-luxury-gold transition-colors"
               >
                 <Mail className="w-4 h-4 flex-shrink-0" />
-                <span className="text-sm">the.bluemountainofficial@gmail.com</span>
+                <span className="text-sm">contact@bluemountain.work</span>
               </a>
               <a 
                 href="tel:+917085485883"
