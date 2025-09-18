@@ -1,0 +1,39 @@
+User-agent: *
+Allow: /
+
+# Additional search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+# Sitemap
+Sitemap: https://thebluemountaincoffee.com/sitemap.xml
+Sitemap: https://bluemountaincoffee.com/sitemap.xml
+
+# Disallow admin or private areas (if any)
+# Disallow: /admin/
+# Disallow: /private/
+
+# Allow all search engines to crawl
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Crawl delay (optional)
+Crawl-delay: 1
+
+# Host preference
+Host: https://thebluemountaincoffee.com
