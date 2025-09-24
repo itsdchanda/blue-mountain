@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 import { Send, MapPin, Phone, Mail, Clock, Instagram, Twitter, Youtube, Facebook, Linkedin } from 'lucide-react';
@@ -7,6 +7,7 @@ import ScrollReveal from '../components/ScrollReveal';
 
 const Contact: React.FC = () => {
   const location = useLocation();
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const { selectedBeanType, selectedStage, selectedOrigin } = location.state || {};
   
   const [formData, setFormData] = useState({
@@ -16,6 +17,16 @@ const Contact: React.FC = () => {
     location: '',
     message: ''
   });
+
+  // Check if form was successfully submitted
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === 'true') {
+      setIsSubmitted(true);
+      // Clean up URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
@@ -65,118 +76,162 @@ const Contact: React.FC = () => {
             {/* Contact Form */}
             <ScrollReveal>
               <div className="bg-coffee-brown/30 rounded-lg p-8 glass-card backdrop-blur-sm border border-luxury-gold/20">
-                <h2 className="font-playfair text-3xl font-bold text-off-white mb-8">
-                  Custom Quotation Request
-                </h2>
-                
-                <form action="https://formsubmit.co/thebluemountain.official@gmail.com" method="POST" className="space-y-6">
-                  {/* FormSubmit Configuration */}
-                  <input type="hidden" name="_cc" value="itsdchanda@gmail.com,contact@bluemountain.work,samikchowdhury33@gmail.com" />
-                  <input type="hidden" name="_subject" value="New Coffee Enquiry - Blue Mountain Coffee" />
-                  <input type="hidden" name="_next" value="https://thebluemountaincoffee.com/contact?success=true" />
-                  <input type="hidden" name="_captcha" value="false" />
-                  <input type="hidden" name="_template" value="table" />
-                  
-                  <div>
-                    <label htmlFor="contactPerson" className="block text-off-white/80 font-medium mb-2">
-                      Contact Person *
-                    </label>
-                    <input
-                      type="text"
-                      id="contactPerson"
-                      name="contactPerson"
-                      required
-                      value={formData.contactPerson}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-charcoal/50 border border-luxury-gold/30 rounded-lg text-off-white focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors backdrop-blur-sm"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="businessName" className="block text-off-white/80 font-medium mb-2">
-                      Business Name *
-                    </label>
-                    <input
-                      type="text"
-                      id="businessName"
-                      name="businessName"
-                      required
-                      value={formData.businessName}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-charcoal/50 border border-luxury-gold/30 rounded-lg text-off-white focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors backdrop-blur-sm"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="email" className="block text-off-white/80 font-medium mb-2">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-charcoal/50 border border-luxury-gold/30 rounded-lg text-off-white focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors backdrop-blur-sm"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="location" className="block text-off-white/80 font-medium mb-2">
-                      Location *
-                    </label>
-                    <input
-                      type="text"
-                      id="location"
-                      name="location"
-                      required
-                      value={formData.location}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-charcoal/50 border border-luxury-gold/30 rounded-lg text-off-white focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors backdrop-blur-sm"
-                    />
-                  </div>
-
-                  {/* Coffee Selection (if coming from shop) */}
-                  {selectedBeanType && selectedStage && selectedOrigin && (
-                    <div>
-                      <label className="block text-off-white/80 font-medium mb-2">
-                        Coffee Selection
-                      </label>
-                      <input
-                        type="text"
-                        name="coffeeSelection"
-                        value={`${selectedBeanType} - ${selectedStage} - ${selectedOrigin}`}
-                        readOnly
-                        className="w-full px-4 py-3 bg-charcoal/50 border border-luxury-gold/30 rounded-lg text-off-white backdrop-blur-sm opacity-75"
-                      />
-                    </div>
-                  )}
-
-                  <div>
-                    <label htmlFor="message" className="block text-off-white/80 font-medium mb-2">
-                      Message *
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      required
-                      rows={4}
-                      value={formData.message}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-charcoal/50 border border-luxury-gold/30 rounded-lg text-off-white focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors resize-none backdrop-blur-sm"
-                      placeholder="Tell us about your coffee requirements, quantity needed, preferred processing method (Berry/Parchment), and any special needs..."
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full font-medium py-3 rounded-lg transition-all duration-300 flex items-center justify-center space-x-2 bg-luxury-gold hover:bg-luxury-gold/90 text-charcoal hover:shadow-gold-glow"
+                {isSubmitted ? (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                    className="text-center py-12"
                   >
-                    <Send className="w-5 h-5" />
-                    <span>Send Enquiry</span>
-                  </button>
-                </form>
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: 0.2, duration: 0.5 }}
+                      className="w-20 h-20 bg-luxury-gold/20 rounded-full flex items-center justify-center mx-auto mb-6"
+                    >
+                      <motion.svg
+                        initial={{ pathLength: 0 }}
+                        animate={{ pathLength: 1 }}
+                        transition={{ delay: 0.5, duration: 0.8 }}
+                        className="w-10 h-10 text-luxury-gold"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </motion.svg>
+                    </motion.div>
+                    <h2 className="font-playfair text-3xl font-bold text-luxury-gold mb-4">
+                      Message Sent Successfully!
+                    </h2>
+                    <p className="text-off-white/80 text-lg mb-6">
+                      Thank you for your enquiry. We'll reply within 24 hours with detailed information and pricing.
+                    </p>
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setIsSubmitted(false)}
+                      className="px-6 py-3 bg-luxury-gold/20 border border-luxury-gold/30 text-luxury-gold rounded-lg hover:bg-luxury-gold/30 transition-colors"
+                    >
+                      Send Another Message
+                    </motion.button>
+                  </motion.div>
+                ) : (
+                  <>
+                    <h2 className="font-playfair text-3xl font-bold text-off-white mb-8">
+                      Custom Quotation Request
+                    </h2>
+                    
+                    <form action="https://formsubmit.co/thebluemountain.official@gmail.com" method="POST" className="space-y-6">
+                      {/* FormSubmit Configuration */}
+                      <input type="hidden" name="_cc" value="itsdchanda@gmail.com,contact@bluemountain.work,samikchowdhury33@gmail.com" />
+                      <input type="hidden" name="_subject" value="New Coffee Enquiry - Blue Mountain Coffee" />
+                      <input type="hidden" name="_next" value={`${window.location.origin}/contact?success=true`} />
+                      <input type="hidden" name="_captcha" value="false" />
+                      <input type="hidden" name="_template" value="table" />
+                      
+                      <div>
+                        <label htmlFor="contactPerson" className="block text-off-white/80 font-medium mb-2">
+                          Contact Person *
+                        </label>
+                        <input
+                          type="text"
+                          id="contactPerson"
+                          name="contactPerson"
+                          required
+                          value={formData.contactPerson}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 bg-charcoal/50 border border-luxury-gold/30 rounded-lg text-off-white focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors backdrop-blur-sm"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="businessName" className="block text-off-white/80 font-medium mb-2">
+                          Business Name *
+                        </label>
+                        <input
+                          type="text"
+                          id="businessName"
+                          name="businessName"
+                          required
+                          value={formData.businessName}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 bg-charcoal/50 border border-luxury-gold/30 rounded-lg text-off-white focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors backdrop-blur-sm"
+                        />
+                      </div>
+
+                      <div>
+                        <label htmlFor="email" className="block text-off-white/80 font-medium mb-2">
+                          Email Address *
+                        </label>
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          required
+                          value={formData.email}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 bg-charcoal/50 border border-luxury-gold/30 rounded-lg text-off-white focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors backdrop-blur-sm"
+                        />
+                      </div>
+
+                      <div>
+                        <label htmlFor="location" className="block text-off-white/80 font-medium mb-2">
+                          Location *
+                        </label>
+                        <input
+                          type="text"
+                          id="location"
+                          name="location"
+                          required
+                          value={formData.location}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 bg-charcoal/50 border border-luxury-gold/30 rounded-lg text-off-white focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors backdrop-blur-sm"
+                        />
+                      </div>
+
+                      {/* Coffee Selection (if coming from shop) */}
+                      {selectedBeanType && selectedStage && selectedOrigin && (
+                        <div>
+                          <label className="block text-off-white/80 font-medium mb-2">
+                            Coffee Selection
+                          </label>
+                          <input
+                            type="text"
+                            name="coffeeSelection"
+                            value={`${selectedBeanType} - ${selectedStage} - ${selectedOrigin}`}
+                            readOnly
+                            className="w-full px-4 py-3 bg-charcoal/50 border border-luxury-gold/30 rounded-lg text-off-white backdrop-blur-sm opacity-75"
+                          />
+                        </div>
+                      )}
+
+                      <div>
+                        <label htmlFor="message" className="block text-off-white/80 font-medium mb-2">
+                          Message *
+                        </label>
+                        <textarea
+                          id="message"
+                          name="message"
+                          required
+                          rows={4}
+                          value={formData.message}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 bg-charcoal/50 border border-luxury-gold/30 rounded-lg text-off-white focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors resize-none backdrop-blur-sm"
+                          placeholder="Tell us about your coffee requirements, quantity needed, preferred processing method (Berry/Parchment), and any special needs..."
+                        />
+                      </div>
+
+                      <button
+                        type="submit"
+                        className="w-full font-medium py-3 rounded-lg transition-all duration-300 flex items-center justify-center space-x-2 bg-luxury-gold hover:bg-luxury-gold/90 text-charcoal hover:shadow-gold-glow"
+                      >
+                        <Send className="w-5 h-5" />
+                        <span>Send Enquiry</span>
+                      </button>
+                    </form>
+                  </>
+                )}
               </div>
             </ScrollReveal>
 
