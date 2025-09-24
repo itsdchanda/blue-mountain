@@ -171,26 +171,3 @@ const Footer: React.FC = () => {
                 <Phone className="w-4 h-4 flex-shrink-0" />
                 <span className="text-sm">+91 70854 85883</span>
               </a>
-              
-              {/* Social Media Icons */}
-              <div className="pt-4">
-                <span className="text-off-white/60 text-sm block mb-3">Follow us:</span>
-                <div className="flex items-center space-x-4">
-                <motion.a 
-                  href="https://wa.me/917085485883" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  aria-label="Chat with us on WhatsApp"
-                  whileHover={{ scale: 1.2, rotate: 5 }}
-                  className="w-10 h-10 bg-luxury-gold/20 rounded-full flex items-center justify-center hover:bg-luxury-gold/30 transition-colors"
-                >
-          </p>
-        </motion.div>
-      </div>
-    </footer>
-  );
-};
-
-export default Footer;
-  )
-}
