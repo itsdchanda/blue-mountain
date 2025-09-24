@@ -171,5 +171,19 @@ const Footer: React.FC = () => {
                 <Phone className="w-4 h-4 flex-shrink-0" />
                 <span className="text-sm">+91 70854 85883</span>
               </a>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Copyright */}
+        <div className="border-t border-luxury-gold/20 pt-8 text-center">
+          <p className="text-off-white/60 text-sm">
+            © {currentYear} Blue Mountain Coffee. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+};
   )
 }
