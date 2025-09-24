@@ -171,3 +171,5 @@ const Footer: React.FC = () => {
                 <Phone className="w-4 h-4 flex-shrink-0" />
                 <span className="text-sm">+91 70854 85883</span>
               </a>
+  )
+}
