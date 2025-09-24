@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
-import { Send, MapPin, Phone, Mail, Clock, CheckCircle, AlertCircle, Loader, Instagram, Twitter, Youtube, Facebook, Linkedin } from 'lucide-react';
+import { Send, MapPin, Phone, Mail, Clock, Instagram, Twitter, Youtube, Facebook, Linkedin } from 'lucide-react';
 import { motion } from 'framer-motion';
 import ScrollReveal from '../components/ScrollReveal';
 
@@ -9,18 +9,11 @@ const Contact: React.FC = () => {
   const location = useLocation();
   const { selectedBeanType, selectedStage, selectedOrigin } = location.state || {};
   
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const [statusMessage, setStatusMessage] = useState('');
-  
   const [formData, setFormData] = useState({
     businessName: '',
     contactPerson: '',
     email: '',
     location: '',
-    monthlyRequirement: selectedBeanType && selectedStage && selectedOrigin
-      ? `${selectedBeanType} - ${selectedStage} - ${selectedOrigin}` 
-      : '',
     message: ''
   });
 
@@ -31,51 +24,6 @@ const Contact: React.FC = () => {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Generate WhatsApp message
-    const whatsappMessage = `🌟 *New Coffee Enquiry - Blue Mountain Coffee* 🌟
-
-👤 *Contact Person:* ${formData.contactPerson}
-🏢 *Business Name:* ${formData.businessName}
-📧 *Email:* ${formData.email}
-📍 *Location:* ${formData.location}
-${formData.monthlyRequirement ? `☕ *Coffee Selection:* ${formData.monthlyRequirement}` : ''}
-
-💬 *Message:*
-${formData.message}
-
----
-*Sent via Blue Mountain Coffee Website*`;
-
-    // Encode message for WhatsApp URL
-    const encodedMessage = encodeURIComponent(whatsappMessage);
-    const whatsappURL = `https://wa.me/917085485883?text=${encodedMessage}`;
-    
-    // Open WhatsApp
-    window.open(whatsappURL, '_blank');
-    
-    // Show success message
-    setSubmitStatus('success');
-    setStatusMessage('Redirecting to WhatsApp... Please send the message to complete your enquiry.');
-    
-    // Reset form after a short delay
-    setTimeout(() => {
-      setFormData({
-        businessName: '',
-        contactPerson: '',
-        email: '',
-        location: '',
-        monthlyRequirement: selectedBeanType && selectedStage && selectedOrigin
-          ? `${selectedBeanType} - ${selectedStage} - ${selectedOrigin}` 
-          : '',
-        message: ''
-      });
-      setSubmitStatus('idle');
-      setStatusMessage('');
-    }, 3000);
-  };
 
   return (
     <>
@@ -121,22 +69,14 @@ ${formData.message}
                   Custom Quotation Request
                 </h2>
                 
-                {/* Status Messages */}
-                {submitStatus === 'success' && (
-                  <div className="mb-6 p-4 bg-green-900/30 border border-green-500/50 rounded-lg flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
-                    <p className="text-green-300">{statusMessage}</p>
-                  </div>
-                )}
-                
-                {submitStatus === 'error' && (
-                  <div className="mb-6 p-4 bg-red-900/30 border border-red-500/50 rounded-lg flex items-center space-x-3">
-                    <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0" />
-                    <p className="text-red-300">{statusMessage}</p>
-                  </div>
-                )}
-                
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form action="https://formsubmit.co/thebluemountain.official@gmail.com" method="POST" className="space-y-6">
+                  {/* FormSubmit Configuration */}
+                  <input type="hidden" name="_cc" value="itsdchanda@gmail.com,contact@bluemountain.work,samikchowdhury33@gmail.com" />
+                  <input type="hidden" name="_subject" value="New Coffee Enquiry - Blue Mountain Coffee" />
+                  <input type="hidden" name="_next" value="https://thebluemountaincoffee.com/contact?success=true" />
+                  <input type="hidden" name="_captcha" value="false" />
+                  <input type="hidden" name="_template" value="table" />
+                  
                   <div>
                     <label htmlFor="contactPerson" className="block text-off-white/80 font-medium mb-2">
                       Contact Person *
@@ -197,6 +137,21 @@ ${formData.message}
                     />
                   </div>
 
+                  {/* Coffee Selection (if coming from shop) */}
+                  {selectedBeanType && selectedStage && selectedOrigin && (
+                    <div>
+                      <label className="block text-off-white/80 font-medium mb-2">
+                        Coffee Selection
+                      </label>
+                      <input
+                        type="text"
+                        name="coffeeSelection"
+                        value={`${selectedBeanType} - ${selectedStage} - ${selectedOrigin}`}
+                        readOnly
+                        className="w-full px-4 py-3 bg-charcoal/50 border border-luxury-gold/30 rounded-lg text-off-white backdrop-blur-sm opacity-75"
+                      />
+                    </div>
+                  )}
 
                   <div>
                     <label htmlFor="message" className="block text-off-white/80 font-medium mb-2">
@@ -219,7 +174,7 @@ ${formData.message}
                     className="w-full font-medium py-3 rounded-lg transition-all duration-300 flex items-center justify-center space-x-2 bg-luxury-gold hover:bg-luxury-gold/90 text-charcoal hover:shadow-gold-glow"
                   >
                     <Send className="w-5 h-5" />
-                    <span>Send via WhatsApp</span>
+                    <span>Send Enquiry</span>
                   </button>
                 </form>
               </div>
